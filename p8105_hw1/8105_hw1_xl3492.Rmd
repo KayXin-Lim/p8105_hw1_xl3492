@@ -1,0 +1,27 @@
+---
+title: "8105_hw1_xl3492"
+author: "Xinyi Li"
+date: "2024-09-12"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+data("penguins", package = "palmerpenguins")
+# Load library
+library(palmerpenguins)
+
+# Data Description
+size_dataset <- paste(nrow(penguins), "rows and", ncol(penguins), "columns")
+mean_flipper_length <- mean(penguins$flipper_length_mm, na.rm = TRUE)
+name_important_vars <- names(penguins)
+
+# Description Print
+cat("The penguins dataset contains ", size_dataset, 
+    " records of data. The important variables include", paste(name_important_vars, collapse = ", "),
+    ". The mean flipper length is", round(mean_flipper_length, 2), "mm.")
+
+
