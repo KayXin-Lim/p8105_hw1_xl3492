@@ -10,10 +10,18 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
+# Import Dataset
 data("penguins", package = "palmerpenguins")
-# Load library
-library(palmerpenguins)
+```
 
+```{r}
+# Load library
+library(ggplot2)
+library(palmerpenguins)
+```
+
+
+```{r}
 # Data Description
 size_dataset <- paste(nrow(penguins), "rows and", ncol(penguins), "columns")
 mean_flipper_length <- mean(penguins$flipper_length_mm, na.rm = TRUE)
@@ -23,5 +31,57 @@ name_important_vars <- names(penguins)
 cat("The penguins dataset contains ", size_dataset, 
     " records of data. The important variables include", paste(name_important_vars, collapse = ", "),
     ". The mean flipper length is", round(mean_flipper_length, 2), "mm.")
+```
+
+```{r}
+# Create the scatterplot
+scatter_plot <- ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
+  geom_point() +
+  labs(title = "Scatterplot of Flipper Length vs Bill Length",
+       x = "Bill Length (mm)",
+       y = "Flipper Length (mm)") +
+  theme_minimal()
+
+# Display the plot
+print(scatter_plot)
+```
+```{r}
+# Export the plot to the working directory
+ggsave("scatterplot_penguins.png", plot = scatter_plot)
+```
+```{r}
+# Create a random sample from a standard Normal distribution
+set.seed(444)
+random_sample <- rnorm(10)
+
+# Create a logical vector indicating whether elements of the sample are greater than 0
+logical_vector <- random_sample > 0
+
+# Create a character vector of length 10
+character_vector <- sample(letters, 10)
+
+# Create a factor vector of length 10 with 3 different factor levels
+factor_vector <- factor(sample(c("lvl1", "lvl2", "lvl3"), 10, replace = TRUE))
+
+# Create the data frame
+df <- data.frame(random_sample, logical_vector, character_vector, factor_vector)
+
+print(df)
+```
+
+```{r}
+# Trials to take the mean of each column
+mean_random_sample <- mean(df$random_sample)
+mean_logical_vector <- mean(df$logical_vector)
+mean_character_vector <- try(mean(df$character_vector), silent = TRUE)  
+mean_factor_vector <- try(mean(df$factor_vector), silent = TRUE)
+
+# Output the results
+cat("Mean of random_sample:", mean_random_sample, "\n")
+cat("Mean of logical_vector:", mean_logical_vector, "\n")
+cat("Mean of character_vector:", mean_character_vector, "\n")
+cat("Mean of factor_vector:", mean_factor_vector, "\n")
+```
+Since values of character_vector and factor_vector are neither numerical nor logical. Hence, it will return errors. Instead, since values of random_sample is numeric, then the mean is also numeric. And values of logical_vector is the proportion of TRUE values (where TRUE is coerced to 1 and FALSE to 0).
 
 
